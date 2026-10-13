@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapa de Oportunidades con IA 🌍</title>
+  <meta name="description" content="Descubre y comparte oportunidades de negocio detectadas con IA en ciudades de todo el mundo." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🌍</span>
+        <div>
+          <h1>Mapa de Oportunidades</h1>
+          <p>con Inteligencia Artificial</p>
+        </div>
+      </div>
+      <button class="btn-publish" id="btnOpenModal">
+        <span>+</span> Publicar Oportunidad
+      </button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-tag">🤖 Comunidad Global</p>
+      <h2>Detecta oportunidades de negocio<br /><span>con el poder de la IA</span></h2>
+      <p class="hero-sub">Comparte y descubre oportunidades reales detectadas por personas como tú en ciudades de todo el mundo.</p>
+    </div>
+    <div class="stats-bar">
+      <div class="stat"><span id="totalCount">0</span><small>Oportunidades</small></div>
+      <div class="stat"><span id="totalCities">0</span><small>Ciudades</small></div>
+      <div class="stat"><span id="totalCountries">0</span><small>Países</small></div>
+      <div class="stat"><span id="totalLikes">0</span><small>Likes Totales</small></div>
+    </div>
+  </section>
+
+  <!-- FILTERS -->
+  <section class="filters-section">
+    <div class="filters-inner">
+      <div class="search-box">
+        <span>🔍</span>
+        <input type="text" id="searchInput" placeholder="Buscar oportunidades..." />
+      </div>
+      <select id="filterCity"><option value="">🏙️ Todas las ciudades</option></select>
+      <select id="filterCountry"><option value="">🌍 Todos los países</option></select>
+      <select id="filterCategory">
+        <option value="">📂 Todas las categorías</option>
+        <option value="Agricultura">🌾 Agricultura</option>
+        <option value="Salud">🏥 Salud</option>
+        <option value="Educación">📚 Educación</option>
+        <option value="Transporte">🚗 Transporte</option>
+        <option value="Comercio">🛍️ Comercio</option>
+        <option value="Tecnología">💻 Tecnología</option>
+        <option value="Medio Ambiente">🌿 Medio Ambiente</option>
+        <option value="Finanzas">💰 Finanzas</option>
+        <option value="Turismo">✈️ Turismo</option>
+        <option value="Otro">🔮 Otro</option>
+      </select>
+      <button class="btn-clear" id="btnClearFilters">✕ Limpiar</button>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITIES GRID -->
+  <main class="main-content">
+    <div class="section-header">
+      <h3 id="resultsTitle">Todas las oportunidades</h3>
+      <span id="resultsCount" class="badge"></span>
+    </div>
+    <div class="grid" id="opportunitiesGrid"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <span>🔭</span>
+      <h4>No se encontraron oportunidades</h4>
+      <p>Sé el primero en publicar una oportunidad o ajusta los filtros.</p>
+      <button class="btn-publish" onclick="openModal()">+ Publicar la primera</button>
+    </div>
+    <div class="loading" id="loadingState">
+      <div class="spinner"></div>
+      <p>Cargando oportunidades...</p>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>🚀 Nueva Oportunidad</h3>
+        <button class="modal-close" id="btnCloseModal">✕</button>
+      </div>
+      <form id="opportunityForm">
+        <div class="form-grid">
+          <div class="form-group full">
+            <label>Nombre de la oportunidad *</label>
+            <input type="text" id="fieldName" placeholder="Ej: Delivery inteligente para zonas rurales" required />
+          </div>
+          <div class="form-group">
+            <label>Ciudad *</label>
+            <input type="text" id="fieldCity" placeholder="Ej: Medellín" required />
+          </div>
+          <div class="form-group">
+            <label>País *</label>
+            <input type="text" id="fieldCountry" placeholder="Ej: Colombia" required />
+          </div>
+          <div class="form-group">
+            <label>Categoría *</label>
+            <select id="fieldCategory" required>
+              <option value="">Selecciona...</option>
+              <option value="Agricultura">🌾 Agricultura</option>
+              <option value="Salud">🏥 Salud</option>
+              <option value="Educación">📚 Educación</option>
+              <option value="Transporte">🚗 Transporte</option>
+              <option value="Comercio">🛍️ Comercio</option>
+              <option value="Tecnología">💻 Tecnología</option>
+              <option value="Medio Ambiente">🌿 Medio Ambiente</option>
+              <option value="Finanzas">💰 Finanzas</option>
+              <option value="Turismo">✈️ Turismo</option>
+              <option value="Otro">🔮 Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Potencial de mercado *</label>
+            <select id="fieldPotential" required>
+              <option value="">Selecciona...</option>
+              <option value="🔥 Alto">🔥 Alto</option>
+              <option value="⚡ Medio">⚡ Medio</option>
+              <option value="🌱 Emergente">🌱 Emergente</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label>Problema detectado *</label>
+            <textarea id="fieldProblem" placeholder="Describe el problema que encontraste en esa ciudad..." rows="3" required></textarea>
+          </div>
+          <div class="form-group full">
+            <label>Solución con IA *</label>
+            <textarea id="fieldSolution" placeholder="¿Cómo la IA puede resolver este problema?" rows="3" required></textarea>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn-cancel" id="btnCancel">Cancelar</button>
+          <button type="submit" class="btn-submit" id="btnSubmit">🚀 Publicar oportunidad</button>
+        </div>
+        <p class="form-note" id="formNote"></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
